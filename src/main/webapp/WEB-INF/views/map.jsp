@@ -16,7 +16,7 @@
 }
 
 .info-box {
-	width: 60%; /* 필요 시 조정 */
+	width: 80%; /* 필요 시 조정 */
 	max-height: 350px; /* 높이 제한 */
 	overflow: auto; /* 넘칠 경우 스크롤 */
 	border: 1px solid #ccc; /* (선택) 테두리로 영역 구분 */
@@ -137,6 +137,7 @@
 .input_box button:hover {
 	background-color: #139171;
 }
+
 </style>
 <%@include file="./includes/header.jsp"%>
 <section class="main content">
@@ -197,8 +198,7 @@
 
 	<script type="text/javascript"
 		src="//dapi.kakao.com/v2/maps/sdk.js?appkey=93ef0428acf91a435ff28bf23556f61d&libraries=services"></script>
-	<c:if test="${!empty mapvo}">
-		<script>
+	<script>
    		var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
 		mapOption = {
 			center : new kakao.maps.LatLng(${mapvo[0].lat}, ${mapvo[0].lon}), // 지도의 중심좌표
@@ -238,7 +238,6 @@
 		}
 	 
    		</script>
-	</c:if>
 
 </section>
 <%@include file="./includes/footer.jsp"%>

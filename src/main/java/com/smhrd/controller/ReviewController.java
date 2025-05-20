@@ -28,4 +28,9 @@ public class ReviewController {
 	    return "Review";
 	}
 
+	@RequestMapping("/ReviewWrite")
+	public String ReviewWrite(Model model) {
+	    
+		return "ReviewWrite";
+	}
 }

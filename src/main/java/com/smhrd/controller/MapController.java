@@ -19,7 +19,8 @@ public class MapController {
 	
 	@RequestMapping("/map")
 	public String map() {
-		return "Map";
+//		return "Map";
+		return "redirect:/searchMap?searchValue=0&searchKeyword=";
 	}
 	
 	@RequestMapping("/searchMap")

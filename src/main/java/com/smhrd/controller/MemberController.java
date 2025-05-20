@@ -1,6 +1,7 @@
 package com.smhrd.controller;
 
 
+import java.io.File;
 import java.io.FileOutputStream;
 
 import javax.servlet.ServletContext;
@@ -23,24 +24,34 @@ public class MemberController {
 	@Autowired
 	MemberMapper mapper;
 	
-	// 업로드용
-//	@Autowired
-//	ServletContext context;
-//	
+	//업로드용
+	@Autowired
+	ServletContext context;
+	
 //	@RequestMapping("/upload")
 //	public String upload() {
 //		return "upload_test";
 //	}
 //	
 //	@RequestMapping("/do_upload")
-//	public String do_upload(@RequestParam(value= "file", required = false)MultipartFile file) {
+//	public String do_upload(@RequestParam(value= "file", required = false)MultipartFile file, Model model) {
+////		String loc = "C:/eGovFrame-4.0.0/workspace.edu/Project/src/main/webapp/resources/upload/";
 //		String loc = context.getRealPath("/resources/upload/");
+//	    System.out.println("저장 경로: " + loc);
 //		FileOutputStream fos;
 //		String fileDemo = file.getOriginalFilename();
+//		System.out.println(loc);
 //		if(fileDemo.length() > 0) {
 //			try {
-//				fos = new FileOutputStream(loc + file.getOriginalFilename());
+//				File targetFile = new File(loc, fileDemo);
+//				fos = new FileOutputStream(targetFile);
 //				fos.write(file.getBytes());
+//				fos.close();
+//				System.out.println("파일 저장 경로: " + targetFile.getAbsolutePath());
+//				
+//				// 파일명을 모델에 담기
+//	            model.addAttribute("fileName", fileDemo);
+//	            
 //			} catch (Exception e) {
 //				e.printStackTrace();
 //			}

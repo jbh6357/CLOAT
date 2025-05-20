@@ -52,7 +52,7 @@
 						//alert('로그인해주세요');
 						// 로그인 상태면
 						// -> 아이디 정보 가지고 글쓰기 페이지로 이동
-						window.location.href = "resources/assets/html/boardWrite.html;
+						window.location.href = "ReviewWrite";
 					}
 				</script>				
 			</div>

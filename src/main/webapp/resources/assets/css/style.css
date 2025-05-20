@@ -91,6 +91,8 @@ input[type=checkbox]:focus, input[type=file]:focus, input[type=radio]:focus{
     height: 80px;
     display: flex;
     box-shadow: 0 0px 6px rgb(190 190 190 / 15%);
+    position : relative;
+    z-index : 999;
 }
 .header > .inner{
 	display: flex;
