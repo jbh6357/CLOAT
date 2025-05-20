@@ -1,19 +1,21 @@
 package com.smhrd.controller;
 
 
-import java.io.IOException;
-import java.util.List;
+import java.io.FileOutputStream;
+
+import javax.servlet.ServletContext;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.smhrd.mapper.MemberMapper;
-import com.smhrd.model.MapVO;
+import com.smhrd.model.MemberVO;
 
 @Controller
 public class MemberController {
@@ -21,52 +23,71 @@ public class MemberController {
 	@Autowired
 	MemberMapper mapper;
 	
-	@RequestMapping("/")
-	public String book() {	
-		return "main";
-	}
-
-	@RequestMapping("/map")
-	public String map(Model model) {
-		return "map";
-	}
-	
-	@RequestMapping("/searchMap")
-	public String searchMap(@RequestParam String searchValue,  @RequestParam String searchKeyword, Model model){
-		
-		List<MapVO> mapvo = null;
-		
-		if(searchValue=="1") {
-			mapvo = mapper.searchMap1(searchKeyword);
-		}else if(searchValue=="2") {
-			mapvo = mapper.searchMap2(searchKeyword);
-		}else if(searchValue=="3") {
-			mapvo = mapper.searchMap3(searchKeyword);
-		}else {
-			mapvo = mapper.searchMap(searchKeyword);
-		}
-
-		model.addAttribute("mapvo", mapvo);
-		return "map";
-	}
-	
-	@RequestMapping("/upload")
-	public String upload() {
-		return "upload_test";
-	}
-	
-	@RequestMapping("/do_upload")
-	public void do_upload(@RequestParam(value= "file", required = false)MultipartFile file) {
-        ClassPathResource resource = new ClassPathResource("pic");
-        String absolutePath = null;
-		try {
-			absolutePath = resource.getFile().getAbsolutePath();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-        System.out.println("Upload directory: " + absolutePath);
+	// 업로드용
+//	@Autowired
+//	ServletContext context;
+//	
+//	@RequestMapping("/upload")
+//	public String upload() {
+//		return "upload_test";
+//	}
+//	
+//	@RequestMapping("/do_upload")
+//	public String do_upload(@RequestParam(value= "file", required = false)MultipartFile file) {
+//		String loc = context.getRealPath("/resources/upload/");
+//		FileOutputStream fos;
+//		String fileDemo = file.getOriginalFilename();
+//		if(fileDemo.length() > 0) {
+//			try {
+//				fos = new FileOutputStream(loc + file.getOriginalFilename());
+//				fos.write(file.getBytes());
+//			} catch (Exception e) {
+//				e.printStackTrace();
+//			}
+//		}
+//		
 //		return "upload_test2";
+//		
+//	}
+	
+	@RequestMapping("/")
+	public String main() {	
+		return "Main";
 	}
 	
+	@RequestMapping("join")
+	public String join() {
+		return "Join";
+	}
+	
+	@RequestMapping("join_us")
+	public String join_us(MemberVO vo, Model model) {
+		mapper.join(vo);
+		model.addAttribute("id",vo.getId());
+		return "Join_success";
+	}
+	
+	@RequestMapping("login")
+	public String login() {
+		return "Login";
+	}
+	
+	@PostMapping("/login_do")
+	public String login(MemberVO vo, HttpSession session) {
+			
+		MemberVO mvo = mapper.login(vo);
+				
+		session.setAttribute("mvo", mvo);
+		 if (mvo != null) {
+	            // 로그인 성공 - 세션에 사용자 정보 저장
+	            
+	            session.setAttribute("mvo", mvo);
+	            return "redirect:/"; // 홈 페이지로 이동
+	        } else {
+	            // 로그인 실패 - 로그인 페이지로 되돌아가기
+	        	return "redirect:/login";
+	        }
+		
+		
+		}
 }

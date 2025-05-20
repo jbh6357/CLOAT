@@ -9,6 +9,12 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class MemberVO {
 
-	private int temp;
+	private String id;
+	private String pw;
+	private String name;
+	private String email;
+	private String phone;
+	private String profile_img;
+	private String user_type;
 	
 }

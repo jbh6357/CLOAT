@@ -2,34 +2,16 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.smhrd.mapper.MemberMapper">
 
-	<select id="map" resultType="com.smhrd.model.MapVO">
-		select * from tb_map 
+	<insert id="join" parameterType="com.smhrd.model.MemberVO">
+		INSERT INTO tb_user (
+    ID, PW, NAME, EMAIL, PHONE, PROFILE_IMG, USER_TYPE, CREATED_AT
+) VALUES (
+    #{id}, #{pw}, #{name}, #{email}, #{phone}, #{profile_img}, #{user_type}, SYSTIMESTAMP
+)
+	</insert>
+	
+	<select id="login" parameterType="com.smhrd.model.MemberVO" resultType = "com.smhrd.model.MemberVO">
+		select * from tb_user where id =#{id} and pw =#{pw}
 	</select>
 	
-	<select id="searchMap" resultType="com.smhrd.model.MapVO">
-		SELECT * FROM tb_map 
-    	WHERE addr LIKE '%' || #{search} || '%' 
-       OR org_name LIKE '%' || #{search} || '%' 
-       OR sido LIKE '%' || #{search} || '%' 
-       OR sigungu LIKE '%' || #{search} || '%'
-	</select>
-	
-	<!-- 지역 -->
-	<select id="searchMap1" resultType="com.smhrd.model.MapVO">
-		SELECT * FROM tb_map 
-    	WHERE sido LIKE '%' || #{search} || '%' 
-       OR sigungu LIKE '%' || #{search} || '%'
-	</select>
-	
-	<!-- 기관명 -->
-	<select id="searchMap2" resultType="com.smhrd.model.MapVO">
-		SELECT * FROM tb_map 
-    	WHERE org_name LIKE '%' || #{search} || '%' 
-	</select>
-	
-	<!-- 주소 -->
-	<select id="searchMap3" resultType="com.smhrd.model.MapVO">
-		SELECT * FROM tb_map 
-    	WHERE addr LIKE '%' || #{search} || '%' 
-	</select>
 </mapper>
