@@ -16,7 +16,7 @@ public class ReviewVO {
 	private String review_content;
 	private String review_file;
 	private Date created_at;
-	private Date upddated_at;
-	private String review_views;
+	private Date updated_at;
+	private int review_views;
 	private String id;
 }

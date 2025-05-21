@@ -45,14 +45,12 @@
 					로그인 안했으면 : '로그인해주세요' alert;
 					로그인 했으면 : 글쓰기 페이지로 이동; 
 				-->
-				<button onClick="writeBtn()" class="btn ipt_sbm">글쓰기</button>
+				<c:if test="${mvo.getUser_type() == 'ADMIN'}">
+					<button onClick="writeBtn()" class="btn ipt_sbm">글쓰기</button>
+				</c:if>
 				<script>
-					let writeBtn = () => {
-						// 로그인 상태 아니면
-						//alert('로그인해주세요');
-						// 로그인 상태면
-						// -> 아이디 정보 가지고 글쓰기 페이지로 이동
-						window.location.href = "resources/assets/html/boardWrite.html;
+					let writeBtn = () => {		
+						window.location.href = "NewsWrite";		
 					}
 				</script>				
 			</div>
@@ -70,14 +68,13 @@
 
 			<!-- 검색창 -->
 			<div class="search_form">
-				<form>
-					<select class="sel">
-						<option name="">내용+댓글</option>
-						<option name="">내용</option>
-						<option name="">제목</option>
-						<option name="">작성자</option>
+				<form action="NewsSearch">
+					<select class="sel" name="searchValue">
+						<!-- <option name="">내용+댓글</option> -->
+						<option value="news_content">내용</option>
+						<option value="news_title">제목</option>
 					</select>
-					<input class="ipt_tt" type="text" name="" placeholder="검색어 입력">
+					<input class="ipt_tt" type="text" name="searchContent" placeholder="검색어 입력">
 					<input class="ipt_sbm" type="submit" value="검색">
 				</form>
 			</div>

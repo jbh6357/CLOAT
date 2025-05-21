@@ -5,24 +5,24 @@
    <section class="content board write">
 		<div class="page_top">
 			<div class="inner">
-				<h2 class="pageName">고객후기</h2>
+				<h2 class="pageName">공지사항</h2>
 			</div>
 		</div>			
 		<div class="inner">
-			<form action="ReviewUpload" method="post" enctype="multipart/form-data">
+			<form action="NoticeUpload" method="post" enctype="multipart/form-data">
 				<ul class="write_ul">
 					<li>
 						<span>ID</span>
-						<input type="text" name="id" value= ${mvo.id} class="ipt_tt" readonly> <!-- 로그인한 작성자 아이디 불러오기 -->
+						<input type="text" name="admin_id" value= ${mvo.id} class="ipt_tt" readonly> <!-- 로그인한 작성자 아이디 불러오기 -->
 					</li>
 					<li>
 						<span>제목</span>
-						<input type="text" name="review_title" class="ipt_tt" >
+						<input type="text" name="notice_title" class="ipt_tt" >
 					</li>
 					<li class="flex_dir_col">
 						<span>내용</span>
 						<div class="post-form">
-							<textarea name="review_content" id="summernote">
+							<textarea name="notice_content" id="summernote">
 							</textarea>
 						</div>  						
 					</li>					

@@ -3,6 +3,7 @@ package com.smhrd.controller;
 
 import java.io.File;
 import java.io.FileOutputStream;
+import java.util.UUID;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpSession;
@@ -27,7 +28,7 @@ public class MemberController {
 	//업로드용
 	@Autowired
 	ServletContext context;
-	
+			
 //	@RequestMapping("/upload")
 //	public String upload() {
 //		return "upload_test";
@@ -66,19 +67,54 @@ public class MemberController {
 		return "Main";
 	}
 	
-	@RequestMapping("join")
+	@RequestMapping("/join")
 	public String join() {
 		return "Join";
 	}
 	
-	@RequestMapping("join_us")
-	public String join_us(MemberVO vo, Model model) {
+	@RequestMapping("/jointest")
+	public String joinTest() {
+		return "JoinTest";
+	}
+	
+//  수정 전 회원가입
+//	@RequestMapping("/join_us")
+//	public String join_us(MemberVO vo, Model model) {
+//		mapper.join(vo);
+//		model.addAttribute("id",vo.getId());
+//		return "Join_success";
+//	}
+	
+	@RequestMapping("/join_us")
+	public String join_us(@RequestParam(value= "file", required = false)MultipartFile file, MemberVO vo, Model model) {
+		String loc = context.getRealPath("/resources/file/");
+		FileOutputStream fos;
+		String fileDemo = "null";
+		if (file != null && !file.isEmpty()) {
+			fileDemo = file.getOriginalFilename();
+			if(fileDemo.length() > 0) {
+				try {
+					String baseName = fileDemo.substring(0, fileDemo.lastIndexOf(".")); //4
+					String extension = fileDemo.substring(fileDemo.lastIndexOf("."));   //.jpg
+					fileDemo = baseName + '_' + UUID.randomUUID().toString() + extension;
+					File targetFile = new File(loc, fileDemo);
+					fos = new FileOutputStream(targetFile); // 파일저장경로 + 파일저장명
+					fos.write(file.getBytes());  // 우리가 진짜 가져온 파일로 쓰기
+					fos.close();  // 이건 안써줘도 되는 코드지만 용량 절약을 습관화
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		}
+		
+		vo.setProfile_img(fileDemo);
+		
 		mapper.join(vo);
 		model.addAttribute("id",vo.getId());
 		return "Join_success";
 	}
 	
-	@RequestMapping("login")
+	@RequestMapping("/login")
 	public String login() {
 		return "Login";
 	}
@@ -100,5 +136,12 @@ public class MemberController {
 	        }
 		
 		
-		}
+	}
+	
+	@RequestMapping("/logout")
+	public String logout(HttpSession session) {
+		session.invalidate();
+		return "Main";
+	}
+
 }

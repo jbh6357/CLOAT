@@ -1,11 +1,18 @@
 package com.smhrd.controller;
 
+import java.io.File;
+import java.io.FileOutputStream;
 import java.util.List;
+import java.util.UUID;
+
+import javax.servlet.ServletContext;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.smhrd.mapper.ReviewMapper;
 import com.smhrd.model.ReviewVO;
@@ -16,7 +23,10 @@ public class ReviewController {
 	@Autowired
 	ReviewMapper mapper;
 
-	
+	//업로드용
+	@Autowired
+	ServletContext context;
+		
 	@RequestMapping("/ReviewList")
 	public String ReviewList(Model model) {
 	    List<ReviewVO> list = mapper.ReviewList();
@@ -27,10 +37,55 @@ public class ReviewController {
 	    model.addAttribute("list", list);
 	    return "Review";
 	}
+	
+	@RequestMapping("/ReviewSearch")
+	public String ReviewSearch(@RequestParam String searchValue, @RequestParam String searchContent ,Model model) {
+		
+		List<ReviewVO> list = mapper.ReviewSearch(searchValue, searchContent);
+		System.out.println(searchValue + " " + searchContent);
+		model.addAttribute("list", list);
+		return "Review";
+	}
 
 	@RequestMapping("/ReviewWrite")
 	public String ReviewWrite(Model model) {
-	    
 		return "ReviewWrite";
 	}
+	
+	@RequestMapping("/ReviewUpload")
+	public String ReviewUpload(ReviewVO vo, @RequestParam(value= "file", required = false)MultipartFile file) {
+		String loc = context.getRealPath("/resources/file/");
+		FileOutputStream fos;
+		String fileDemo = "null";
+		if (file != null && !file.isEmpty()) {
+			fileDemo = file.getOriginalFilename();
+			if(fileDemo.length() > 0) {
+				try {
+					String baseName = fileDemo.substring(0, fileDemo.lastIndexOf("."));
+					String extension = fileDemo.substring(fileDemo.lastIndexOf("."));
+					fileDemo = baseName + '_' + UUID.randomUUID().toString() + extension;
+					File targetFile = new File(loc, fileDemo);
+					fos = new FileOutputStream(targetFile);
+					fos.write(file.getBytes());
+					fos.close();
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		}
+		
+		vo.setReview_file(fileDemo);
+		vo.setReview_views(0);
+		
+		int result = mapper.write(vo);
+		
+		if(result>0) {
+			System.out.println("성공");
+		}else {
+			System.out.println("실패");
+		}
+		return "redirect:/ReviewList";
+	}
+	
+	
 }

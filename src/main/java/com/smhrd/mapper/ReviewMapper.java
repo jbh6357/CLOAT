@@ -8,5 +8,9 @@ import com.smhrd.model.ReviewVO;
 public interface ReviewMapper {
 
 	public List<ReviewVO> ReviewList();
+
+	public int write(ReviewVO vo);
+
+	public List<ReviewVO> ReviewSearch(String searchValue, String searchContent);
 	
 }

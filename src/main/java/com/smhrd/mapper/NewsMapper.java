@@ -9,4 +9,8 @@ public interface NewsMapper {
 
 	public List<NewsVO> NewsList();
 	
+	public int write(NewsVO vo);
+
+	public List<NewsVO> NewsSearch(String searchValue, String searchContent);
+	
 }

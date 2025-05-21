@@ -26,13 +26,13 @@
    <header class="header">
       <div class="inner">
          <h1 class="logo">
-            <a href="index.html"><img src="resources/images/logo.svg" alt=""></a>
+            <a href="./"><img src="resources/images/logo.svg" alt=""></a>
          </h1>
          <ul class="depth">
             <li>
                <a href="">CLOAT</a>
                <ul class="depth2">
-                  <li><a href="">개요</a></li>
+                  <li><a href="">개요/</a></li>
                   <li><a href="">팀 소개</a></li>
                   <li><a href="">비전</a></li>
                   <li><a href="">오시는 길</a></li>
@@ -55,8 +55,20 @@
             </li>
          </ul>
          <div class="hd_util">
-            <a href="join">회원가입</a>
-            <a href="login">로그인</a>
+            <c:choose>
+         	<c:when test="${not empty mvo}">
+         	<ul>
+         	<li><span>${mvo.id}님 </span>/<a href="mypage">마이페이지</a>/<a href="logout">로그아웃</a></li>
+            </ul>
+            </c:when>
+         <c:otherwise>
+         <ul>
+         <li>            
+            <a href="join">회원가입</a>|<a href="login">로그인</a>
+         </li>
+         </ul>
+         </c:otherwise>
+        </c:choose>    
          </div>
       </div>
    </header>

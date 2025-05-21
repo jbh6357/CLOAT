@@ -6,7 +6,31 @@
 		SELECT * FROM tb_news 
 	</select>
 
+	<select id="NewsSearch" resultType="com.smhrd.model.NewsVO">
+		select * from tb_news
+		<where>
+			<choose>
+				<when test="param1 == 'news_title'">
+					news_title LIKE '%' || #{param2} || '%'
+				</when>
+				<when test="param1 == 'news_content'">
+					news_content LIKE '%' || #{param2} || '%'
+				</when>
+				<otherwise>
+					admin_id = null
+				</otherwise>
+			</choose>
+		</where>
+	</select>
 
+	<insert id="write" parameterType="com.smhrd.model.NewsVO">
+		insert into tb_news(news_title, news_content, news_file, created_at,
+		updated_at, news_views, admin_id) values(
+		#{news_title},
+		#{news_content}, #{news_file}, systimestamp, systimestamp,
+		#{news_views}, #{admin_id}
+		)
+	</insert>
 
 
 </mapper>

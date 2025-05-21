@@ -6,7 +6,31 @@
 		SELECT * FROM tb_qna
 	</select>
 
-
-
+	<select id="QnaSearch" resultType="com.smhrd.model.QnaVO">
+		select * from tb_qna
+		<where>
+			<choose>
+				<when test="param1 == 'qna_title'">
+					qna_title LIKE '%' || #{param2} || '%'
+				</when>
+				<when test="param1 == 'qna_content'">
+					qna_content LIKE '%' || #{param2} || '%'
+				</when>
+				<when test="param1 == 'id'">
+					id LIKE '%' || #{param2} || '%'
+				</when>
+				<otherwise>
+					id = null
+				</otherwise>
+			</choose>
+		</where>
+	</select>
+	
+	<insert id="write" parameterType="com.smhrd.model.QnaVO">
+		insert into tb_qna(qna_title, qna_content, qna_file, created_at,
+		qna_views, id) values(
+		#{qna_title}, #{qna_content}, #{qna_file}, systimestamp, #{qna_views}, #{id}
+		)
+	</insert>
 
 </mapper>
