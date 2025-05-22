@@ -6,12 +6,17 @@
 		INSERT INTO tb_user (
     ID, PW, NAME, EMAIL, PHONE, PROFILE_IMG, USER_TYPE, CREATED_AT
 ) VALUES (
-    #{id}, #{pw}, #{name}, #{email}, #{phone}, #{profile_img}, #{user_type}, SYSTIMESTAMP
+    #{id}, #{pw}, #{name}, #{email}, #{phone}, #{profile_img, jdbcType=VARCHAR}, #{user_type}, SYSTIMESTAMP
 )
 	</insert>
 	
 	<select id="login" parameterType="com.smhrd.model.MemberVO" resultType = "com.smhrd.model.MemberVO">
 		select * from tb_user where id =#{id} and pw =#{pw}
 	</select>
+	
+	<select id="IdCheck" resultType="int">
+ 		select count(*) from tb_user where id =#{id} 
+  	</select>
+  	
 	
 </mapper>

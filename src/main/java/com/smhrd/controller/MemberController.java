@@ -3,6 +3,8 @@ package com.smhrd.controller;
 
 import java.io.File;
 import java.io.FileOutputStream;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.UUID;
 
 import javax.servlet.ServletContext;
@@ -11,9 +13,11 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.smhrd.mapper.MemberMapper;
@@ -72,10 +76,29 @@ public class MemberController {
 		return "Join";
 	}
 	
-	@RequestMapping("/jointest")
-	public String joinTest() {
-		return "JoinTest";
+	@ResponseBody
+	@RequestMapping("/IdCheck")
+	public Map<String, Boolean> IdCheck(@RequestParam String id) {
+		System.out.println(id);
+		int cnt = mapper.IdCheck(id);
+		boolean available = false;
+		if(cnt == 0) {
+			// cnt == 0 : DB에 중복된 이메일이 없다.
+			// 	--> 사용 가능한 이메일이다.
+			available = true; // 사용 가능하다(true)
+		}
+		// Hash map(자료구조)
+		// Key, Value)한쌍으로 구성
+		// value는 중복 가능, key는 중복 불가(고유값)
+		Map<String, Boolean> response = new HashMap<>();
+		response.put("available", available);
+		return response;
 	}
+	
+//	@RequestMapping("/jointest")
+//	public String joinTest() {
+//		return "JoinTest";
+//	}
 	
 //  수정 전 회원가입
 //	@RequestMapping("/join_us")
@@ -142,6 +165,11 @@ public class MemberController {
 	public String logout(HttpSession session) {
 		session.invalidate();
 		return "Main";
+	}
+	
+	@GetMapping("/join_success")
+	public String join_success() {
+		return "Join_success";
 	}
 
 }
