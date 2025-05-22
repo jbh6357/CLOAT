@@ -50,7 +50,7 @@
                   <li><a href="NoticeList">공지사항</a></li>
                   <li><a href="NewsList">뉴스</a></li>
                   <li><a href="QnaList">고객문의</a></li>
-                  <li><a href="map">도움기관 지도</a></li>
+                  <li><a href="map?type=청소년상담복지센터">도움기관 지도</a></li>
                </ul>
             </li>
          </ul>

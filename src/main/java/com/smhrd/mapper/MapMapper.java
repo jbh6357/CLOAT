@@ -11,11 +11,11 @@ public interface MapMapper {
 
 	public List<MapVO> map();
 
-	public List<MapVO> searchMap(String searchKeyword);
+	public List<MapVO> searchMap(String searchKeyword, String type);
 
-	public List<MapVO> searchMap1(String searchKeyword);
+	public List<MapVO> searchMap1(String searchKeyword, String type);
 
-	public List<MapVO> searchMap2(String searchKeyword);
+	public List<MapVO> searchMap2(String searchKeyword, String type);
 
-	public List<MapVO> searchMap3(String searchKeyword);
+	public List<MapVO> searchMap3(String searchKeyword, String type);
 }
