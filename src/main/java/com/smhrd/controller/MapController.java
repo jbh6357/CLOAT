@@ -22,7 +22,6 @@ public class MapController {
 	@RequestMapping("/map")
 	public String map(@RequestParam String type) {
 		
-		System.out.println(type + "map");
 		String encodedType = "";
 		try {
 			encodedType = URLEncoder.encode(type, "UTF-8");
@@ -37,7 +36,6 @@ public class MapController {
 							@RequestParam String type, Model model){
 		
 		
-		System.out.println(type + "searchMap");
 		List<MapVO> mapvo = null;
 		
 		if(searchValue=="1") {
