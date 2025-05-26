@@ -40,7 +40,7 @@
                </ul>
             </li>
             <li>
-               <a href="">서비스</a>
+               <a href="service">서비스</a>
             </li>
             <li>
                <a href="ReviewList">고객후기</a>

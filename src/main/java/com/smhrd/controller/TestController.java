@@ -30,10 +30,10 @@ public class TestController {
 	@Autowired
 	UploadMapper mapper;
 	
-	@RequestMapping("/service")
-	public String service() {
-		return "test";
-	}
+//	@RequestMapping("/service")
+//	public String service() {
+//		return "service";
+//	}
 	
 	@RequestMapping("/service_do")
 	public String service_do(@RequestParam(value= "file", required = false)MultipartFile file, 
@@ -41,6 +41,7 @@ public class TestController {
 		
 		String loc = context.getRealPath("/resources/test_input/");
 		String outputFilePath = context.getRealPath("/resources/test_output/");
+		
 		
 	    System.out.println("저장 경로: " + loc);
 		FileOutputStream fos;
@@ -101,5 +102,6 @@ public class TestController {
         model.addAttribute("uvo", vo);
 		return "test2";
 	}
+	
 	
 }
